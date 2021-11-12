@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 
+- AWS::Serverless-2016-10-31
+Description: Compose Infrastucture
+
+Parameters:
+  Environment:
+    Type: String
+    Description: Environment name
+    Default: sandbox
+
+Resources:
+  ArtifactsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub compose-${Environment}-${AWS::Region}-artifacts
+      Tags:
+        - Key: Name
+          Value: !Sub compose-${Environment}-${AWS::Region}-artifacts
+  
