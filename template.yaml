@@ -4,12 +4,17 @@ Transform:
 Description: Compose Infrastucture
 
 Parameters:
+  DomainName:
+    Type: String
+    Description: Domain Name
+    Default: sandbox.compose.run
   Environment:
     Type: String
     Description: Environment name
     Default: sandbox
 
 Resources:
+  # Stores artifacts for SAM deployments
   ArtifactsBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -17,4 +22,13 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub compose-${Environment}-${AWS::Region}-artifacts
-  
+  # Provides public domain
+  PublicZone:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      Name: !Ref DomainName
+      HostedZoneConfig:
+        Comment: !Sub ${DomainName} zone 
+      HostedZoneTags:
+      - Key: Name
+        Value: !Ref DomainName
