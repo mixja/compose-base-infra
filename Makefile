@@ -1,5 +1,5 @@
 -include .env
-PROJECT_NAME = compose-infra
+PROJECT_NAME = compose-base-infra
 
 deploy:
 	sam deploy --stack-name $(STACK_NAME) \
