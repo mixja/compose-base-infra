@@ -32,3 +32,17 @@ Resources:
       HostedZoneTags:
       - Key: Name
         Value: !Ref DomainName
+  # Wildcard Certificate for Domain
+  PublicCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref DomainName
+      DomainValidationOptions:
+        - DomainName: !Ref DomainName
+          HostedZoneId: !Ref PublicZone
+      SubjectAlternativeNames:
+      - !Sub '*.${DomainName}'
+      ValidationMethod: DNS
+      Tags:
+      - Key: Name
+        Value: !Ref DomainName
