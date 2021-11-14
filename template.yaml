@@ -46,3 +46,17 @@ Resources:
       Tags:
       - Key: Name
         Value: !Ref DomainName
+  # SES Cognito Resources
+  SesCognito:
+    Type: AWS::Serverless::Application
+    DependsOn:
+      - PublicZone
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-west-2:300398300817:applications/ses-cognito-verification
+        SemanticVersion: 1.0.0
+      Parameters:
+        Prefix: !Sub ${AWS::StackName}
+        DomainName: !Ref DomainName
+        FromEmail: !Sub no-reply@${DomainName}
+        ForwardingEmail: justin.menga@toptal.com
